@@ -1,0 +1,42 @@
+syntax="proto2";
+package doc_server_proto;
+//首先是建立使用sofarpc建立一个协议，然后
+//是请求的结构和响应的结构
+
+option cc_generic_services = true;
+
+//请求的结构
+message Request{
+    //标识符
+    required uint64 sid = 1;
+    //时间戳
+    //参数内容
+    required int64 timestamp = 2;
+    required string query = 3;
+}
+
+message Item{
+    required string title = 1;
+    required string desc = 2;
+    required string show_url = 3;
+    required string jump_url = 4;
+}
+
+
+//响应的结构
+message Response{
+    //标识符
+    //时间戳
+    //数据结果
+    //错误码
+    required uint64 sid = 1;
+    required int64 timestamp = 2;
+    repeated Item item = 3;
+    optional int32 err_code = 4;
+}
+
+
+//远程调用的函数
+service DocServerAPI{
+    rpc Search(Request) returns (Response);
+}

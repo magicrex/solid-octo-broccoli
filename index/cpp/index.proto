@@ -1,0 +1,38 @@
+syntax='proto2';
+
+package doc_index_proto;
+
+message Pair{
+    required uint32 begin = 1;
+    required uint32 end = 2;
+};
+
+message DocInfo{
+    //一个正排索引的对应信息
+    required uint64 id = 1;
+    required string title = 2;
+    required string content = 3;
+    required string show_url = 4;
+    required string jump_url = 5;
+    //以下两个字段，把标题的分词结果存起来
+    repeated Pair title_token = 6;
+    repeated Pair content_token = 7;
+};
+
+message Weight{
+    required uint64 id = 1;
+    required int32 weight = 2;
+    required int32 first_pos = 3;
+};
+
+message KwdInfo{
+    //用来存放key和value
+    required string key = 1;
+    repeated Weight doc_list = 2;
+};
+
+message Index{
+    //包含了正排索引和倒排索引
+    repeated DocInfo forward_index = 1;
+    repeated KwdInfo inverted_index = 2;
+};
